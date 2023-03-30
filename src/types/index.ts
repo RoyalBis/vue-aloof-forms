@@ -62,6 +62,16 @@ export class DefaultValidators {
     }
 }
 
+export type AloofFieldData = {
+    "fieldName": string
+    "fieldType": string
+    "labelText": string
+    "placeholderText": string
+    "buttonText": string
+    "validator": Validator[]
+    "value": string
+}
+
 function joinStrings(strs: string[]) {
     return strs.reduce((output: string, str: string, i: number, strs: string[]) => {
         return output += i === 0 ? str : i === strs.length -1  ? ", or str" : ", str" 
