@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-import * as path from 'path';
+import { resolve } from 'path';
 import typescript2 from 'rollup-plugin-typescript2';
 import dts from "vite-plugin-dts";
 
@@ -27,26 +27,20 @@ export default defineConfig({
     })
   ],
   build: {
-    cssCodeSplit: true,
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: "src/index.ts",
-      name: 'Vue-Aloof-Forms',
-      formats: ["es", "cjs", "umd"],
+      name: 'vue-aloof-forms',
+      entry: resolve(__dirname,"src/index.ts"),
       fileName: format => `vue-aloof-forms.${format}.js`
     },
     rollupOptions: {
       // make sure to externalize deps that should not be bundled
       // into your library
       input: {
-        main: path.resolve(__dirname, "src/index.ts")
+        main: resolve(__dirname, "src/index.ts")
       },
       external: ['vue'],
       output: {
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'main.css') return 'vue-aloof-forms.css';
-          return assetInfo.name;
-        },
         exports: "named",
         globals: {
           vue: 'Vue',
@@ -56,7 +50,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': resolve(__dirname, '/src'),
     },
   },
 })

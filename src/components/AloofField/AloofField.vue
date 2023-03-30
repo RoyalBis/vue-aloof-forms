@@ -1,15 +1,29 @@
 <template>
     <div class="flex flex-col">
-        <label for="name"
-            class="text-2xl block text-gray-700 font-bold mb-2"
-        >{{ labelText }}</label>
+        <slot name="label">
+            <label for="name"
+                class="text-2xl block text-gray-700 font-bold mb-2"
+            >{{ labelText }}</label>
+        </slot>
         <div v-if="fieldType === 'text'" class="flex justify-center gap-4">
-            <input :id="fieldName" :type="fieldType" :placeholder="placeholderText" v-model="value"
-                class="h-24 text-4xl bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-            >
-            <button @click="submit()"
-                class="w-28 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >{{ buttonText }}</button>
+            <slot v-if="fieldType === 'text'" name="textInput">
+                <AloofTextInput :fieldName="fieldName" :placeholder="placeholderText" :startingValue="startingValue" :v-model="value">
+
+                </AloofTextInput>
+            </slot>
+            <slot v-else-if="fieldType === 'file'" name="fileInput">
+                <AloofFileInput :startingFiles="startingValue.split(',')" :files="value">
+
+                </AloofFileInput>
+            </slot>
+            <slot v-else-if="fieldType === 'options'" name="selectInput">
+
+            </slot>
+            <slot name="submitButton">
+                <button @click="submit()"
+                    class="w-28 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >{{ buttonText }}</button>
+            </slot>
         </div>
         <!-- <SolitaryFileInput v-if="fieldType === 'file'">
 
@@ -18,46 +32,54 @@
 </template>
 
 <script setup lang="ts">
-// import SolitaryFileInput from '@/components/SolitaryFileInput.vue';
 import { ref } from 'vue';
-import '@/assets/tailwind.css'
+import  type { PropType } from 'vue';
 
-export interface SolitaryFieldProps {
+import { AloofTextInput, AloofFileInput } from '@/components'
+import type { Validator } from '@/types';
+import '@/assets/tailwind.css';
+
+import { DefaultValidators } from '@/types';
+
+export interface Props {
     fieldName: string
     fieldType: string
     labelText: string
     placeholderText?: string
     buttonText?: string 
     startingValue?: string
-    validator?: (input: string) => boolean; 
+    validation: Validator[]
 }
 
-const props = withDefaults(defineProps<SolitaryFieldProps>(), {
+const props = withDefaults(defineProps<Props>(), {
     fieldName: "",
     fieldType: "text",
     labelText: "",
     placeholderText: "",
     buttonText: "Next",
     startingValue: "",
-    validator: (value: string) => { return value !== "" }
-})
+    validation: () => [ DefaultValidators.NONE() ]
+});
 
+// Emits
 const emit = defineEmits<{
     (e: 'submitted', value: string): void
 }>()
 
-
+// Methods
 function submit() {
     const val = value.value;
     console.log(val)
 
-    if(props.validator(val)) {
-        emit('submitted', val);
-    } else {
-        //display validation rules
-    }
+    let valid = props.validation.reduce(
+        (valid,f) => { 
+            return f.rule(val) && valid
+        }, true 
+    );
+
+    valid ? emit('submitted', val) : console.log("Invalid") //display Validation Rules;
 }
-console.log(props.fieldType)
+
 let value = ref(props.startingValue);
 </script>
 

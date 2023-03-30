@@ -1,16 +1,15 @@
 import type { App } from 'vue';
-import * as components from '@/components';
+import { AloofField } from './components/index';
+import { AloofTextInput } from './components/index';
 
-
-const componentsList = components.default;
-
-const VueAloofForms = {
+export default {
     install: (app: App) => {
-        Object.keys(componentsList).forEach(name => {
-            const test = (componentsList as any)[name];
-            app.component(name, test);
-        })
+        app.component("AloofField", AloofField);
+        app.component("AloofTextInput", AloofTextInput);
     }
 }
 
-export default VueAloofForms;
+export type { greeting } from './types/index';
+
+export { AloofField };
+export { AloofTextInput };
