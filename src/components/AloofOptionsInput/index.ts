@@ -1,3 +1,3 @@
-import AloofOptions from './AloofOptions.vue';
+import AloofOptionsInput from './AloofOptionsInput.vue';
 
-export default { AloofOptions }
+export default { AloofOptionsInput }

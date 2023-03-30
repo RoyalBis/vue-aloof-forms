@@ -1,7 +1,3 @@
-export type greeting = {
-    language: string;
-}
-
 export interface Validator {
     name?: string //named identifer for the rule
     text?: string //human readable text describing the validation rule
