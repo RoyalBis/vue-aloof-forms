@@ -15,7 +15,7 @@ export class DefaultValidators {
         return {
             name: "Required",
             text: `Field is required.`,
-            rule(value: string | undefined): boolean { return !value }
+            rule(value: string | undefined): boolean { return ( value !== "") }
         }
     }
     static MIN(min: number): Validator {
