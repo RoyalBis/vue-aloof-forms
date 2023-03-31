@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { AloofField } from  '@/components';
+import type { AloofFieldData } from '@/types';
 
 export interface Props {
     name: string
