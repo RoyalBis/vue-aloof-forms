@@ -65,10 +65,10 @@ export class DefaultValidators {
 export type AloofFieldData = {
     "fieldName": string
     "fieldType": string
-    "labelText": string
+    "labelText"?: string
     "placeholderText"?: string
     "buttonText"?: string
-    "validator": Validator[]
+    "validators"?: Validator[]
     "value": string
 }
 

@@ -24,16 +24,6 @@ export interface Props {
     fields: Array<AloofFieldData>
 }
 
-export interface AloofFieldData {
-    fieldName: string
-    fieldType: string
-    labelText?: string
-    placeholderText?: string
-    buttonText?: string 
-    value: string
-    validator?: (input: string) => boolean; 
-}
-
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
