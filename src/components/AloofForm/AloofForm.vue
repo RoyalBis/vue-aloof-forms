@@ -1,5 +1,5 @@
 <template>
-        <AloofField v-if="!submissionPrompt" v-for="field in currentField" :field-type="field.fieldType" :label-text="field.labelText" :placeholder-text="field.placeholderText" :button-text="field.buttonText" :starting-vsalue="field.value" :key="field.fieldName" @submitted="handleSubmitted($event, currentFieldIndex)"/>
+        <AloofField v-if="!submissionPrompt" v-for="field in currentField" :field-type="field.fieldType" :label-text="field.labelText" :placeholder-text="field.placeholderText" :button-text="field.buttonText" :starting-vsalue="field.value" :key="field.fieldName" @submitted="handleSubmitted($event, currentFieldIndex)" />
         <div v-if="submissionPrompt" 
             class="flex flex-col justify-center items-center gap-8 p-12 rounded overflow-hidden shadow-lg"
         >

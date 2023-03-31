@@ -66,8 +66,8 @@ export type AloofFieldData = {
     "fieldName": string
     "fieldType": string
     "labelText": string
-    "placeholderText": string
-    "buttonText": string
+    "placeholderText"?: string
+    "buttonText"?: string
     "validator": Validator[]
     "value": string
 }
