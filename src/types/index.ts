@@ -70,6 +70,7 @@ export type AloofFieldData = {
     "buttonText"?: string
     "validators"?: Validator[]
     "value": string
+    "required"?: string
 }
 
 function joinStrings(strs: string[]) {
