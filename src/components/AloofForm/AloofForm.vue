@@ -48,7 +48,3 @@ let currentFieldIndex = ref(0);
 let currentField = computed(() => props.fields.slice(currentFieldIndex.value,currentFieldIndex.value + 1))
 let submissionPrompt = ref(false);
 </script>
-
-<style lang="scss" scoped>
-
-</style>
