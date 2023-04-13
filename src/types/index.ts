@@ -73,6 +73,8 @@ export type AloofFieldData = {
     "value": string
     "options"?: string[]
     "required"?: boolean
+    "skipped"?: boolean
+    "condition"?: boolean
 }
 
 function joinStrings(strs: string[]) {
