@@ -4,7 +4,6 @@ import { AloofFileInput } from './components/index';
 import { AloofForm } from './components/index';
 import { AloofOptionsInput } from './components/index';
 import { AloofTextInput } from './components/index';
-import { DefaultValidators } from './types';
 
 export default {
     install: (app: App) => {
@@ -25,8 +24,9 @@ export {
 };
 
 export {
-    DefaultValidators
-}
+    DefaultValidators,
+    DefaultConditions,
+} from './types'
 
 export type { AloofFieldData } from './types';
-export type { Validator } from './types';
+export type { Validator, FieldConditional } from './types';

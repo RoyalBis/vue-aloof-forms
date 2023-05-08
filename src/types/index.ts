@@ -4,6 +4,11 @@ export interface Validator {
     rule(value: string | undefined): boolean //functor return a boolean value; true for valid, false for invalid. 
 }
 
+export interface FieldConditional {
+    name?: string //named identifier for the rule
+    apply(fields: AloofFieldData[]): boolean
+}
+
 export class DefaultValidators {
     static NONE(): Validator {
         return {
@@ -62,6 +67,21 @@ export class DefaultValidators {
     }
 }
 
+export class DefaultConditions {
+    static FIELDIS(value: string, field: string): FieldConditional {
+        return {
+            name: "FieldIs",
+            apply(fields: AloofFieldData[]): boolean { return fields.find((e: AloofFieldData) => e.fieldName === field)?.value === value}
+        }
+    }
+    static FIELDISNOT(value: string, field: string): FieldConditional {
+        return {
+            name: "FieldIsNot",
+            apply(fields: AloofFieldData[]):boolean { return fields.find((e) => e.fieldName === field)?.value !== value }    
+        }
+    }
+}
+
 export type AloofFieldData = {
     "fieldName": string
     "fieldType": string
@@ -70,11 +90,12 @@ export type AloofFieldData = {
     "placeholderText"?: string
     "buttonText"?: string
     "validators"?: Validator[]
-    "value": string
+    "default"?: string
+    "value"?: string
     "options"?: string[]
     "required"?: boolean
     "skipped"?: boolean
-    "condition"?: boolean
+    "condition"?: FieldConditional
 }
 
 function joinStrings(strs: string[]) {
